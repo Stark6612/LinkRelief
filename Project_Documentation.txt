@@ -90,12 +90,7 @@ Implement a lightweight LLM (on-device) to categorize verbal descriptions or
 image contents to rank the most critical "Rescue" calls during massive casualty 
 events.
 
-6.3 Resource Bartering & Logistics Marketplace
-Expand the "NGO Team" functionality to allow organizations to trade surplus 
-supplies (e.g., 500 blankets for 200 units of insulin) directly through the 
-dashboard.
-
-6.4 Satellite Integration
+6.3 Satellite Integration
 Establish a pipeline for low-bandwidth satellite messaging (e.g., Garmin InReach 
 or Starlink Mini) to push incident GeoJSON data through non-terrestrial networks.
 
@@ -116,7 +111,4 @@ To verify the system's resilience in a live environment:
 6.  The system will automatically sync and push the queued report to the 
     backend, proving the "Zero-Intervention" recovery logic.
 
-================================================================================
-GENERATE PROJECT DOCUMENTATION: [txt]
-ID: LR-DOC-2026-FIB
 ================================================================================
