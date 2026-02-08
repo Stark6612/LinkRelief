@@ -74,6 +74,16 @@ npm run dev
 ```
 *Runs at http://localhost:3000*
 
+## 🛠️ How to Demo: Relay Link (Offline Sync)
+
+Experience the project's resilience by simulating a network failure:
+
+1.  **Go Offline**: Open the dashboard at `http://localhost:3000`. Open **DevTools (F12)** -> **Network** tab -> Select **Offline**.
+2.  **Trigger SOS**: Click a category (e.g., Fire) and pin a location on the map.
+3.  **Queue View**: A toast notification will confirm: *"Offline: Report saved to Relay Link Queue"*.
+4.  **Restore Signal**: Change DevTools back to **No throttling** (Online).
+5.  **Auto-Sync**: The system will detect the signal and automatically flush the queue, sending your report to the responders.
+
 ## 🌍 Environment Variables
 
 **Frontend (`frontend/.env.local`)**

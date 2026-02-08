@@ -1,0 +1,122 @@
+================================================================================
+LINKRELIEF: TACTICAL DISASTER COORDINATION PLATFORM
+================================================================================
+TECHNICAL DOCUMENTATION & MISSION OVERVIEW
+Version: 1.0.0
+Date: February 2026
+================================================================================
+
+1. EXECUTIVE SUMMARY
+--------------------
+LinkRelief is a next-generation disaster management ecosystem designed for the 
+"Last Mile" of crisis response. Unlike centralized systems that fail during 
+network blackouts, LinkRelief emphasizes resilience, speed, and decentralization. 
+It enables survivors to send life-saving SOS alerts while providing NGOs with a 
+real-time command center to coordinate verified rescue missions.
+
+2. THE PROBLEM SPACE
+--------------------
+In high-stress disaster scenarios (Earthquakes, Floods, Conflict Zones), three 
+critical failure points emerge:
+1. Bandwidth Collapse: Traditional apps fail to load assets on 2G/EDGE networks.
+2. Information Chaos: Reports are unverified, leading to resource misallocation.
+3. Offline Paralysis: Most cloud-based apps disconnect the user the moment 
+   signal is lost.
+
+3. TECHNICAL ARCHITECTURE
+-------------------------
+The platform is built on a modern, modular stack optimized for performance and 
+reliability:
+
+- Frontend: Next.js 14 (App Router) with Tailwind CSS for high-performance UI. 
+  It utilizes a "Tactical/Postal" theme architecture to maximize readability 
+  across varied environment lighting.
+- Backend: Express.js (Node.js) acting as a high-speed proxy and resource 
+  optimizer.
+- Database: Supabase (PostgreSQL) for relational data and Realtime channels 
+  (Postgres Changes) for instant cross-device updates.
+- ORM: Prisma for type-safe database interactions and structured schema handling.
+- Graphics: MapLibre GL JS for vector/raster map rendering with client-side 
+  dark-mode filtering.
+
+4. CORE FUNCTIONALITIES
+-----------------------
+
+4.1 The "3-Tap" Rapid SOS System
+Survivors can report emergencies in exactly three interactions:
+1. Select Category (Medical, Fire, Flood).
+2. Pin Location (Interactively on the Tactical Map).
+3. Confirm Severity (Low, Medium, High).
+This system minimizes cognitive load during panic and captures GPS data 
+automatically without requiring manual address entry.
+
+4.2 Relay Link (Offline Sync Protocol)
+The most critical feature for resilient networking. Relay Link uses a persistent 
+localStorage queue to store incident reports if the device is offline. When 
+connectivity is restored, the system automatically "flushes" the queue to the 
+server using a background synchronization hook (`useRelayLink.ts`).
+
+4.3 NGO Command Center & Verification
+LinkRelief moves beyond "crowdsourcing" by implementing a strict verification 
+hierarchy. NGO administrators must be vetted by the Global Admin. Only verified 
+NGOs can "Verify" or "Deploy" resources to an incident, changing the map markers 
+from "Unverified/Red" to "Verified/Green" in real-time.
+
+4.4 ScaleDown Image Optimization
+The backend implements the "ScaleDown" service using the Sharp library. Every 
+image uploaded is aggressively compressed to under 50KB. This ensures that a 
+responder in the field can see a situation-report photo even on the weakest 
+data connections.
+
+5. SECURITY & DATA PRIVACY
+--------------------------
+- Environment Isolation: All API keys (Supabase, MapTiler, Prisma) are isolated 
+  via .env variables and excluded from Git history.
+- Verification Logic: Role-based access controls ensure only authenticated NGO 
+  members can modify incident statuses.
+- Tactical Privacy: Coordinates are used purely for emergency response and 
+  broadcast via secure Realtime channels.
+
+6. FUTURE ENHANCEMENTS & IDEAS
+------------------------------
+
+6.1 P2P Mesh Communication
+Integrate WebRTC or Bluetooth Low Energy (BLE) to allow devices within 100 meters 
+to "hop" reports to each other until one device reaches a functional cellular 
+tower.
+
+6.2 AI-Driven Priority Sorting
+Implement a lightweight LLM (on-device) to categorize verbal descriptions or 
+image contents to rank the most critical "Rescue" calls during massive casualty 
+events.
+
+6.3 Resource Bartering & Logistics Marketplace
+Expand the "NGO Team" functionality to allow organizations to trade surplus 
+supplies (e.g., 500 blankets for 200 units of insulin) directly through the 
+dashboard.
+
+6.4 Satellite Integration
+Establish a pipeline for low-bandwidth satellite messaging (e.g., Garmin InReach 
+or Starlink Mini) to push incident GeoJSON data through non-terrestrial networks.
+
+7. CONCLUSION
+-------------
+LinkRelief is more than a dashboard; it is a digital lifeline. By combining 
+offline-first architecture with real-time verification, it provides the bridge 
+between chaos and coordinated rescue.
+
+8. DEMONSTRATION MANUAL: RELAY LINK
+-----------------------------------
+To verify the system's resilience in a live environment:
+1.  Navigate to the Dashboard (http://localhost:3000/dashboard).
+2.  Open Browser DevTools -> Network -> Select "Offline".
+3.  Perform a 3-tap SOS report (Category -> Map Pin -> Severity).
+4.  Observe the "Saved to Queue" toast notification.
+5.  Restore the network to "Online".
+6.  The system will automatically sync and push the queued report to the 
+    backend, proving the "Zero-Intervention" recovery logic.
+
+================================================================================
+GENERATE PROJECT DOCUMENTATION: [txt]
+ID: LR-DOC-2026-FIB
+================================================================================
