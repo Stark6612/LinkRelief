@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id              String      @id // Linked to Supabase Auth ID
+  name            String
+  type            OrgType
+  secretKey       String?     @unique
+  registrationId  String?     @unique
+  officeNumber    String?
+  publicEmail     String?
+  latitude        Float?
+  longitude       Float?
+  verificationDocs Json?
+  isVerified      Boolean     @default(false)
+  createdAt       DateTime    @default(now())
+  volunteers      Volunteer[]
+  resources       Resource[]
+}
+
+model Resource {
+  id             String           @id @default(uuid())
+  item           String
+  category       ResourceCategory
+  quantity       Int              @default(0)
+  status         ResourceStatus   @default(AVAILABLE)
+  location       String
+  organizationId String?
+  organization   Organization?    @relation(fields: [organizationId], references: [id])
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  isSurplus      Boolean          @default(false)
+}
+
+model Volunteer {
+  id               String          @id // Linked to Supabase Auth ID
+  name             String
+  phone            String?
+  teamCategory     TeamCategory    @default(GENERAL)
+  status           VolunteerStatus @default(AVAILABLE)
+  missionsCount    Int             @default(0)
+  verificationDocs Json?           // NEW: Stores ID and Certificate paths
+  isVerifiedByNGO  Boolean         @default(false)
+  isVerifiedByAdmin Boolean        @default(false) // NEW: For independent users
+  organizationId   String?
+  organization     Organization?   @relation(fields: [organizationId], references: [id])
+  createdAt        DateTime        @default(now())
+  skillTags        String[]
+  currentIncidentId String?
+  currentIncident   Incident?      @relation(fields: [currentIncidentId], references: [id])
+}
+
+enum ResourceCategory {
+
+  MEDICAL
+  NUTRITION
+  SHELTER
+  TOOLS_TECH
+  TRANSPORT
+  OTHER
+}
+
+enum ResourceStatus {
+  AVAILABLE
+  LOW_STOCK
+  OUT_OF_STOCK
+}
+
+model Incident {
+  id             String           @id @default(uuid())
+  category       String
+  description    String?
+  severity       IncidentSeverity @default(MEDIUM)
+  latitude       Float
+  longitude      Float
+  verifiedStatus VerifiedStatus   @default(UNVERIFIED)
+  imageryUrl     String?
+  relayQueued    Boolean          @default(false)
+  reporterId     String?          // Link to the Volunteer/User who tapped
+  isQuickAlert   Boolean          @default(true) // Distinguishes from NGO-created incidents
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  volunteers     Volunteer[]
+}
+
+
+
+enum TeamCategory {
+  MEDICAL
+  RESCUE
+  LOGISTICS
+  COMMUNICATIONS
+  GENERAL
+}
+
+enum OrgType {
+  NGO
+  RESCUE
+}
+
+enum IncidentSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum VerifiedStatus {
+  UNVERIFIED
+  VERIFIED
+  FALSE_ALARM
+}
+
+enum VolunteerStatus {
+  AVAILABLE
+  DEPLOYED
+  RESTING
+}

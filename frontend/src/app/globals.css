@@ -1,0 +1,43 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@layer base {
+  body {
+    @apply antialiased transition-colors duration-300;
+    @apply bg-[#F8FAFC] text-slate-900;
+  }
+
+  .dark body {
+    @apply bg-slate-950 text-slate-100;
+  }
+}
+
+/* Force dropdown options to be visible in both Light and Dark modes */
+select {
+  @apply bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-gray-300 dark:border-slate-700;
+}
+
+option {
+  @apply bg-white dark:bg-slate-800 text-slate-900 dark:text-white;
+}
