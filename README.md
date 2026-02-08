@@ -94,10 +94,10 @@ PORT=3001
 
 | Feature | Visual |
 | --- | --- |
-| **Tactical Dashboard** | ![Dashboard](./assets/screenshots/dashboard.png) |
-| **Live Mission Map** | ![Mission Map](./assets/screenshots/map.png) |
-| **Resource Exchange** | ![Inventory](./assets/screenshots/resources.png) |
-| **Admin Command** | ![Admin](./assets/screenshots/admin.png) |
+| **Tactical Dashboard** | ![Dashboard](./assets/screenshots/tactical%20dashboard.png) |
+| **Login & Access** | ![Login](./assets/screenshots/login%20page.png) |
+| **Resource Exchange** | ![Inventory](./assets/screenshots/resource%20exchange.png) |
+| **Admin Command** | ![Admin](./assets/screenshots/admin%20command.png) |
 
 ---
 *Maintained by LinkRelief Open Source Team.*
